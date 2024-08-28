@@ -1,0 +1,62 @@
+Table users {
+  user_id integer [primary key]
+  user_name varchar
+  email varchar
+  createdAt datetime
+  batch integer
+}
+
+Table batch_data {
+  batch_id integer [primary key]
+  batch_name varchar(100)
+}
+
+Table codeketa {
+  code_id integer [primary key]
+  user_id integer
+  number_of_problem integer
+  status_problem varchar
+}
+
+Table company_drives {
+  drive_id integer [primary key]
+  user_id integer
+  drive_date date
+  company varchar(100)
+}
+
+Table mentors {
+  mentorid integer [primary key]
+  mentorname varchar
+  mentoremail varchar
+}
+
+Table topics {
+  topicid integer [primary key]
+  topic varchar(200)
+  topic_date date
+  mentor_id integer
+}
+
+Table tasks {
+  taskid integer [primary key]
+  topic_id integer
+  task varchar(1000)
+  batch_id integer
+}
+
+Table attendance {
+  attendanceid integer [primary key]
+  user_id integer
+  topicsid integer
+  attended boolean
+}
+
+Ref: users.batch > batch_data.batch_id // many-to-one
+Ref: codeketa.user_id > users.user_id // many-to-one
+Ref: company_drives.user_id > users.user_id // many-to-one
+Ref: topics.mentor_id > mentors.mentorid // many-to-one
+Ref: tasks.topic_id > topics.topicid // many-to-one
+Ref: tasks.batch_id > batch_data.batch_id // many-to-one
+Ref: attendance.user_id > users.user_id // many-to-one
+Ref: attendance.topicsid > topics.topicid // many-to-one
